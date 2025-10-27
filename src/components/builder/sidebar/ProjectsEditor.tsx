@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PortfolioData } from "@/types/portfolio";
 import { Plus, Trash2 } from "lucide-react";
+import { ImageUpload } from "@/components/builder/ImageUpload";
 
 interface ProjectsEditorProps {
   projects: PortfolioData["projects"];
@@ -18,6 +19,7 @@ export const ProjectsEditor = ({ projects, onChange }: ProjectsEditorProps) => {
     description: "",
     tags: [] as string[],
     link: "",
+    image: undefined as string | undefined,
   });
 
   const addProject = () => {
@@ -26,7 +28,7 @@ export const ProjectsEditor = ({ projects, onChange }: ProjectsEditorProps) => {
         ...projects,
         { ...newProject, id: Date.now().toString(), tags: newProject.tags || [] },
       ]);
-      setNewProject({ title: "", description: "", tags: [], link: "" });
+      setNewProject({ title: "", description: "", tags: [], link: "", image: undefined });
       setShowAddForm(false);
     }
   };
@@ -111,6 +113,12 @@ export const ProjectsEditor = ({ projects, onChange }: ProjectsEditorProps) => {
             onChange={(e) =>
               setNewProject({ ...newProject, link: e.target.value })
             }
+          />
+          <ImageUpload
+            label="Project Image"
+            currentImage={newProject.image}
+            onImageUploaded={(url) => setNewProject({ ...newProject, image: url })}
+            onImageRemoved={() => setNewProject({ ...newProject, image: undefined })}
           />
           <div className="flex gap-2">
             <Button onClick={addProject} size="sm" className="flex-1">

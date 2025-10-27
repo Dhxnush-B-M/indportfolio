@@ -1,4 +1,27 @@
-export type Template = "minimalist" | "creative" | "corporate";
+export type Template = 
+  | "minimalist" 
+  | "creative" 
+  | "corporate" 
+  | "modern" 
+  | "neuomorphism" 
+  | "gradient" 
+  | "monochrome" 
+  | "geometric"
+  | "developer"
+  | "github"
+  | "tech-minimal"
+  | "hacker"
+  | "artistic"
+  | "photography"
+  | "illustrator"
+  | "designer"
+  | "executive"
+  | "consultant"
+  | "freelancer"
+  | "startup"
+  | "writer"
+  | "teacher"
+  | "musician";
 
 export type ColorTheme = {
   primary: string;

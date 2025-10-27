@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PortfolioData } from "@/types/portfolio";
+import { ImageUpload } from "@/components/builder/ImageUpload";
 
 interface HeroEditorProps {
   hero: PortfolioData["hero"];
@@ -49,6 +50,13 @@ export const HeroEditor = ({ hero, onChange }: HeroEditorProps) => {
             rows={3}
           />
         </div>
+
+        <ImageUpload
+          label="Profile Image"
+          currentImage={hero.image}
+          onImageUploaded={(url) => onChange({ ...hero, image: url })}
+          onImageRemoved={() => onChange({ ...hero, image: undefined })}
+        />
       </div>
     </div>
   );
