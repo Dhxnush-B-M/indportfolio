@@ -86,9 +86,10 @@ export const usePortfolio = () => {
     }
   };
 
-  const updatePortfolio = async (id: string, updates: Partial<Portfolio>) => {
+  const updatePortfolio = async (id: string, updates: Partial<Portfolio>, silent = false) => {
     try {
-      setSaving(true);
+      if (!silent) setSaving(true);
+      
       const { error } = await supabase
         .from('portfolios')
         .update(updates)
@@ -96,20 +97,24 @@ export const usePortfolio = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Saved",
-        description: "Your portfolio has been saved",
-      });
+      if (!silent) {
+        toast({
+          title: "Saved",
+          description: "Your portfolio has been saved",
+        });
+      }
 
       await fetchPortfolios();
     } catch (error: any) {
-      toast({
-        title: "Error saving portfolio",
-        description: error.message,
-        variant: "destructive",
-      });
+      if (!silent) {
+        toast({
+          title: "Error saving portfolio",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } finally {
-      setSaving(false);
+      if (!silent) setSaving(false);
     }
   };
 

@@ -14,7 +14,8 @@ const Builder = () => {
   const [portfolioName, setPortfolioName] = useState("My Portfolio");
   const [portfolioId, setPortfolioId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string>("template");
-  const debouncedData = useDebounce(portfolioData, 2000);
+  const [manualSaving, setManualSaving] = useState(false);
+  const debouncedData = useDebounce(portfolioData, 3000);
 
   // Load portfolio if ID exists
   useEffect(() => {
@@ -35,24 +36,53 @@ const Builder = () => {
     }
   }, [id, portfolios]);
 
-  // Auto-save
+  // Auto-save (silent)
   useEffect(() => {
     if (portfolioId && debouncedData) {
       updatePortfolio(portfolioId, { 
         data: debouncedData,
         template: debouncedData.template,
-      });
+      }, true); // silent save
     }
   }, [debouncedData, portfolioId]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (portfolioId) {
-      updatePortfolio(portfolioId, { 
+      setManualSaving(true);
+      await updatePortfolio(portfolioId, { 
         data: portfolioData,
         name: portfolioName,
         template: portfolioData.template,
       });
+      setManualSaving(false);
     }
+  };
+
+  const handleExport = () => {
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${portfolioData.hero.name} - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="portfolio">
+    ${document.querySelector('.mx-auto.min-h-full')?.innerHTML || ''}
+  </div>
+</body>
+</html>`;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${portfolioName.replace(/\s+/g, '-').toLowerCase()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -62,10 +92,8 @@ const Builder = () => {
         portfolioName={portfolioName}
         onNameChange={setPortfolioName}
         onSave={handleSave}
-        saving={saving}
-        onExport={() => {
-          console.log("Exporting portfolio...");
-        }}
+        saving={manualSaving}
+        onExport={handleExport}
       />
       
       <div className="flex flex-1 overflow-hidden">

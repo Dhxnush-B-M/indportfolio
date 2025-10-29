@@ -8,21 +8,24 @@ interface TemplateSelectorProps {
 }
 
 const templates = [
-  {
-    id: "minimalist" as Template,
-    name: "Minimalist",
-    description: "Clean and simple design",
-  },
-  {
-    id: "creative" as Template,
-    name: "Creative",
-    description: "Bold and expressive layout",
-  },
-  {
-    id: "corporate" as Template,
-    name: "Corporate",
-    description: "Professional business style",
-  },
+  { id: "minimalist" as Template, name: "Minimalist", description: "Clean and simple" },
+  { id: "modern" as Template, name: "Modern", description: "Contemporary style" },
+  { id: "creative" as Template, name: "Creative", description: "Bold & expressive" },
+  { id: "corporate" as Template, name: "Corporate", description: "Professional business" },
+  { id: "gradient" as Template, name: "Gradient", description: "Vibrant gradients" },
+  { id: "developer" as Template, name: "Developer", description: "Code-inspired" },
+  { id: "neuomorphism" as Template, name: "Neuomorphism", description: "Soft 3D effects" },
+  { id: "monochrome" as Template, name: "Monochrome", description: "Black & white" },
+  { id: "geometric" as Template, name: "Geometric", description: "Shapes & patterns" },
+  { id: "github" as Template, name: "GitHub", description: "GitHub profile style" },
+  { id: "tech-minimal" as Template, name: "Tech Minimal", description: "Terminal aesthetic" },
+  { id: "hacker" as Template, name: "Hacker", description: "Matrix style" },
+  { id: "artistic" as Template, name: "Artistic", description: "Colorful & creative" },
+  { id: "photography" as Template, name: "Photography", description: "Image-focused" },
+  { id: "illustrator" as Template, name: "Illustrator", description: "Playful design" },
+  { id: "designer" as Template, name: "Designer", description: "Modern showcase" },
+  { id: "executive" as Template, name: "Executive", description: "Luxury professional" },
+  { id: "consultant" as Template, name: "Consultant", description: "Business expert" },
 ];
 
 export const TemplateSelector = ({
