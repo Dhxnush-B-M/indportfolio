@@ -19,19 +19,32 @@ export const MinimalistTemplate = ({ data }: MinimalistTemplateProps) => {
 
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20 md:py-32">
-        <div className="max-w-3xl animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
-            {data.hero.name}
-          </h1>
-          <p className="text-2xl md:text-3xl text-primary mb-6">
-            {data.hero.title}
-          </p>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {data.hero.description}
-          </p>
-          <div className="flex gap-4 mt-8">
-            <Button className="gradient-primary">Get in Touch</Button>
-            <Button variant="outline">View Projects</Button>
+        <div className="max-w-5xl animate-fade-in">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
+                {data.hero.name}
+              </h1>
+              <p className="text-2xl md:text-3xl text-primary mb-6">
+                {data.hero.title}
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {data.hero.description}
+              </p>
+              <div className="flex gap-4 mt-8">
+                <Button className="gradient-primary">Get in Touch</Button>
+                <Button variant="outline">View Projects</Button>
+              </div>
+            </div>
+            {data.hero.image && (
+              <div className="order-first md:order-last">
+                <img
+                  src={data.hero.image}
+                  alt={data.hero.name}
+                  className="w-full h-auto rounded-2xl shadow-elegant object-cover aspect-square"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -39,11 +52,20 @@ export const MinimalistTemplate = ({ data }: MinimalistTemplateProps) => {
       {/* About Section */}
       <section className="bg-muted/30 py-20">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-bold mb-6">About Me</h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {data.about.bio}
-            </p>
+          <div className="max-w-5xl">
+            <h2 className="text-3xl font-bold mb-8">About Me</h2>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {data.about.image && (
+                <img
+                  src={data.about.image}
+                  alt="About"
+                  className="w-full h-auto rounded-2xl shadow-elegant object-cover"
+                />
+              )}
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {data.about.bio}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -75,9 +97,17 @@ export const MinimalistTemplate = ({ data }: MinimalistTemplateProps) => {
           <h2 className="text-3xl font-bold mb-12">Featured Projects</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.projects.map((project) => (
-              <Card key={project.id} className="p-6 hover:shadow-elegant transition-all">
-                <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">{project.description}</p>
+              <Card key={project.id} className="overflow-hidden hover:shadow-elegant transition-all">
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                  />
+                )}
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag, i) => (
                     <span
@@ -101,6 +131,7 @@ export const MinimalistTemplate = ({ data }: MinimalistTemplateProps) => {
                       Code
                     </Button>
                   )}
+                </div>
                 </div>
               </Card>
             ))}

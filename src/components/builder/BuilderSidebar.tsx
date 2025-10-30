@@ -6,6 +6,7 @@ import { AboutEditor } from "./sidebar/AboutEditor";
 import { SkillsEditor } from "./sidebar/SkillsEditor";
 import { ProjectsEditor } from "./sidebar/ProjectsEditor";
 import { ContactEditor } from "./sidebar/ContactEditor";
+import { StyleEditor } from "./sidebar/StyleEditor";
 import { Layout, User, Code, Briefcase, Mail } from "lucide-react";
 
 interface BuilderSidebarProps {
@@ -80,9 +81,12 @@ export const BuilderSidebar = ({
           </TabsContent>
 
           <TabsContent value="style" className="mt-0">
-            <div className="text-sm text-muted-foreground">
-              Color themes and customization coming soon...
-            </div>
+            <StyleEditor
+              colorTheme={portfolioData.colorTheme}
+              onChange={(colorTheme) =>
+                setPortfolioData({ ...portfolioData, colorTheme })
+              }
+            />
           </TabsContent>
         </div>
       </Tabs>
