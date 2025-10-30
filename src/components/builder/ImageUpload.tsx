@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ImageUploadProps {
   label: string;
@@ -14,21 +15,37 @@ interface ImageUploadProps {
 }
 
 export const ImageUpload = ({ label, currentImage, onImageUploaded, onImageRemoved }: ImageUploadProps) => {
+  const { user } = useAuth();
   const [uploading, setUploading] = useState(false);
 
   const uploadImage = async (file: File) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to upload images",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       setUploading(true);
 
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+      const fileName = `${user.id}/${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `${fileName}`;
 
       const { error: uploadError, data } = await supabase.storage
         .from('portfolio-images')
-        .upload(filePath, file);
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        throw new Error(uploadError.message || "Failed to upload image");
+      }
 
       const { data: { publicUrl } } = supabase.storage
         .from('portfolio-images')
@@ -41,9 +58,10 @@ export const ImageUpload = ({ label, currentImage, onImageUploaded, onImageRemov
         description: "Image uploaded successfully",
       });
     } catch (error: any) {
+      console.error("Image upload error:", error);
       toast({
         title: "Upload failed",
-        description: error.message,
+        description: error.message || "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     } finally {
