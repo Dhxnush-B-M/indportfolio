@@ -28,35 +28,36 @@ export const BuilderHeader = ({
   const navigate = useNavigate();
 
   return (
-    <header className="border-b bg-card px-6 py-4">
+    <header className="border-b bg-card/80 backdrop-blur-sm px-6 py-4 shadow-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4 flex-1">
+        <div className="flex items-center gap-6 flex-1">
           <div>
             <h1 
-              className="text-2xl font-bold text-gradient cursor-pointer"
+              className="text-2xl font-bold text-gradient cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => navigate("/dashboard")}
             >
               Portfolio Builder
             </h1>
-            <p className="text-sm text-muted-foreground">Create your stunning portfolio</p>
+            <p className="text-sm text-muted-foreground">Create stunning portfolios in minutes</p>
           </div>
           <div className="flex items-center gap-2">
             <Input
               value={portfolioName}
               onChange={(e) => onNameChange(e.target.value)}
-              className="max-w-xs"
+              className="max-w-xs border-primary/20 focus:border-primary transition-colors"
               placeholder="Portfolio name"
             />
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground hidden md:block">{user?.email}</span>
+          <span className="text-sm text-muted-foreground hidden md:block font-medium">{user?.email}</span>
           
           <Button
             variant="outline"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="hover:shadow-md transition-all hover-lift"
           >
             {theme === "dark" ? (
               <Sun className="h-5 w-5" />
@@ -67,17 +68,17 @@ export const BuilderHeader = ({
 
           <Button 
             variant="outline" 
-            className="gap-2"
+            className="gap-2 hover:shadow-md transition-all hover-lift"
             onClick={onSave}
             disabled={saving}
           >
             <Save className="h-4 w-4" />
-            {saving ? "Saving..." : "Save"}
+            <span className="hidden sm:inline">{saving ? "Saving..." : "Save"}</span>
           </Button>
 
-          <Button onClick={onExport} className="gap-2 gradient-primary">
+          <Button onClick={onExport} className="gap-2 gradient-primary shadow-elegant hover:shadow-glow transition-all hover-lift">
             <Download className="h-4 w-4" />
-            Export
+            <span className="hidden sm:inline">Export</span>
           </Button>
         </div>
       </div>

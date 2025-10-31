@@ -86,7 +86,7 @@ const Builder = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col bg-background">
+    <div className="flex h-screen flex-col bg-gradient-to-br from-background via-primary/5 to-accent/5">
       <BuilderHeader 
         portfolioData={portfolioData}
         portfolioName={portfolioName}

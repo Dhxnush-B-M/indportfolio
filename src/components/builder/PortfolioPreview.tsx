@@ -48,7 +48,7 @@ export const PortfolioPreview = ({ portfolioData }: PortfolioPreviewProps) => {
   };
 
   return (
-    <main className="flex-1 overflow-auto bg-muted/30">
+    <main className="flex-1 overflow-auto bg-gradient-to-br from-background via-primary/5 to-accent/5">
       <div className="mx-auto min-h-full">
         {renderTemplate()}
       </div>

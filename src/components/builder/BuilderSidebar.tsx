@@ -23,20 +23,20 @@ export const BuilderSidebar = ({
   setActiveSection,
 }: BuilderSidebarProps) => {
   return (
-    <aside className="w-80 border-r bg-card overflow-y-auto">
+    <aside className="w-80 border-r bg-card/80 backdrop-blur-sm overflow-y-auto shadow-lg">
       <Tabs value={activeSection} onValueChange={setActiveSection} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 h-auto p-2">
-          <TabsTrigger value="template" className="flex flex-col gap-1 py-2">
-            <Layout className="h-4 w-4" />
-            <span className="text-xs">Template</span>
+        <TabsList className="grid w-full grid-cols-3 h-auto p-2 m-2 bg-muted/50">
+          <TabsTrigger value="template" className="flex flex-col gap-1 py-3 data-[state=active]:bg-background data-[state=active]:shadow-md transition-all">
+            <Layout className="h-5 w-5" />
+            <span className="text-xs font-medium">Template</span>
           </TabsTrigger>
-          <TabsTrigger value="content" className="flex flex-col gap-1 py-2">
-            <User className="h-4 w-4" />
-            <span className="text-xs">Content</span>
+          <TabsTrigger value="content" className="flex flex-col gap-1 py-3 data-[state=active]:bg-background data-[state=active]:shadow-md transition-all">
+            <User className="h-5 w-5" />
+            <span className="text-xs font-medium">Content</span>
           </TabsTrigger>
-          <TabsTrigger value="style" className="flex flex-col gap-1 py-2">
-            <Code className="h-4 w-4" />
-            <span className="text-xs">Style</span>
+          <TabsTrigger value="style" className="flex flex-col gap-1 py-3 data-[state=active]:bg-background data-[state=active]:shadow-md transition-all">
+            <Code className="h-5 w-5" />
+            <span className="text-xs font-medium">Style</span>
           </TabsTrigger>
         </TabsList>
 

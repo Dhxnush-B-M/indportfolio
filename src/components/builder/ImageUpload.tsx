@@ -47,11 +47,16 @@ export const ImageUpload = ({ label, currentImage, onImageUploaded, onImageRemov
         throw new Error(uploadError.message || "Failed to upload image");
       }
 
+      // Get public URL with cache-busting parameter
       const { data: { publicUrl } } = supabase.storage
         .from('portfolio-images')
         .getPublicUrl(filePath);
 
-      onImageUploaded(publicUrl);
+      // Add timestamp to prevent caching issues
+      const urlWithTimestamp = `${publicUrl}?t=${Date.now()}`;
+      
+      console.log("Image uploaded successfully:", urlWithTimestamp);
+      onImageUploaded(urlWithTimestamp);
       
       toast({
         title: "Success",

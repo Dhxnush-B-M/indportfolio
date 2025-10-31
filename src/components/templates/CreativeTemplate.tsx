@@ -52,19 +52,26 @@ export const CreativeTemplate = ({ data }: CreativeTemplateProps) => {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <h2 className="text-4xl font-bold mb-6 text-gradient">About Me</h2>
+            {data.about.image && (
+              <img
+                src={data.about.image}
+                alt="About"
+                className="rounded-2xl shadow-elegant mb-6 w-full max-w-md"
+              />
+            )}
             <p className="text-lg text-muted-foreground leading-relaxed">
               {data.about.bio}
             </p>
           </div>
           <div className="flex flex-col gap-4">
             {data.contact.linkedin && (
-              <Button variant="outline" className="w-full justify-start gap-3">
+              <Button variant="outline" className="w-full justify-start gap-3 hover-lift">
                 <Linkedin className="h-5 w-5" />
                 Connect on LinkedIn
               </Button>
             )}
             {data.contact.github && (
-              <Button variant="outline" className="w-full justify-start gap-3">
+              <Button variant="outline" className="w-full justify-start gap-3 hover-lift">
                 <Github className="h-5 w-5" />
                 Follow on GitHub
               </Button>
@@ -107,36 +114,46 @@ export const CreativeTemplate = ({ data }: CreativeTemplateProps) => {
           {data.projects.map((project, index) => (
             <Card
               key={project.id}
-              className={`p-8 hover:shadow-elegant transition-all ${
+              className={`overflow-hidden hover:shadow-elegant transition-all hover-lift ${
                 index % 2 === 0 ? "md:mt-8" : ""
               }`}
             >
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl mb-6" />
-              <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-              <p className="text-muted-foreground mb-6">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="text-sm px-4 py-2 rounded-full border border-primary/20 text-primary"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex gap-3">
-                {project.link && (
-                  <Button variant="default" className="gap-2">
-                    <ExternalLink className="h-4 w-4" />
-                    Live Demo
-                  </Button>
-                )}
-                {project.github && (
-                  <Button variant="outline" className="gap-2">
-                    <Github className="h-4 w-4" />
-                    Source
-                  </Button>
-                )}
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10" />
+              )}
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
+                <p className="text-muted-foreground mb-6">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-sm px-4 py-2 rounded-full border border-primary/20 text-primary"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-3">
+                  {project.link && (
+                    <Button variant="default" className="gap-2">
+                      <ExternalLink className="h-4 w-4" />
+                      Live Demo
+                    </Button>
+                  )}
+                  {project.github && (
+                    <Button variant="outline" className="gap-2">
+                      <Github className="h-4 w-4" />
+                      Source
+                    </Button>
+                  )}
+                </div>
               </div>
             </Card>
           ))}

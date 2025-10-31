@@ -69,9 +69,18 @@ export const CorporateTemplate = ({ data }: CorporateTemplateProps) => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Professional Summary</h2>
             <Card className="p-8">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {data.about.bio}
-              </p>
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {data.about.image && (
+                  <img
+                    src={data.about.image}
+                    alt="About"
+                    className="rounded-lg shadow-lg"
+                  />
+                )}
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  {data.about.bio}
+                </p>
+              </div>
             </Card>
           </div>
         </div>
@@ -124,8 +133,16 @@ export const CorporateTemplate = ({ data }: CorporateTemplateProps) => {
             <h2 className="text-3xl font-bold mb-12 text-center">Portfolio</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {data.projects.map((project) => (
-                <Card key={project.id} className="overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10" />
+                <Card key={project.id} className="overflow-hidden hover-lift">
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  ) : (
+                    <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10" />
+                  )}
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
                     <p className="text-muted-foreground mb-4">

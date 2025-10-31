@@ -24,7 +24,16 @@ export const NeuomorphismTemplate = ({ data }: { data: PortfolioData }) => {
       <section className="max-w-5xl mx-auto mb-16">
         <h2 className="text-3xl font-bold mb-8 text-gray-800 text-center">About Me</h2>
         <div className="bg-[#e0e5ec] rounded-3xl p-8 shadow-[9px_9px_16px_#b8bdc4,-9px_-9px_16px_#ffffff]">
-          <p className="text-gray-700 leading-relaxed">{data.about.bio}</p>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {data.about.image && (
+              <img
+                src={data.about.image}
+                alt="About"
+                className="rounded-2xl shadow-[inset_3px_3px_6px_#b8bdc4,inset_-3px_-3px_6px_#ffffff]"
+              />
+            )}
+            <p className="text-gray-700 leading-relaxed">{data.about.bio}</p>
+          </div>
         </div>
       </section>
 
